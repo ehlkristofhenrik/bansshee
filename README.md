@@ -7,7 +7,16 @@ This project is yet incomplete and as of now unusable but I am going to develop 
 
 ### What is this?
 
-Banish is my university thesis/hobby project. My goal is to provide an SSH server with some very spicy AI features. I want to bring some new and fresh paradigms to the table.
+Banish is my university thesis/hobby project. My goal is to provide an SSH server with some very spicy AI features. I want to bring some new and fresh paradigms to the table. This should mostly be used for remote servers eg.: AWS.
+
+Proposed features:
+- AI security guard based on project management software ( An AI categorizes your command and based on rulesets either allows or denies the command being executed. )
+- Integration with major agile project managers ( Agile software defined what you will do, and the AI will determine whether it is you or not based on your current tasks )
+- Tunable security
+- 2FA for security critical commands
+- Both inline and transparent modes
+- Server and proxy
+- Plugin support
 
 ### Why though?
 
@@ -19,9 +28,9 @@ Traditional open-source licenses are not enough.
 
 I added restrictions because I feel that people should not be regulated, companies and governments are.
 
-* Personal & University: You are free to use and fork our project as long as you keep the license, state changes ( you know, GPL ) and you can not sell it.
-* Commertial & Business: You have to buy a license. Oh yeah, and be nice to your users!
-* Special: Feel free to request a free license! This is for stuff like Nonprofit orgs, small teams and alike. I will get back to you.
+* Personal & University & Non-Profit & Small-Team: You are free to use and fork our project as long as you keep the license, state changes ( you know, GPL ) and you can not sell it.  ( small_team.members.length <= 20 )
+* Commertial & Business: All of the above, and you have to buy a license. You can not force usage and have to comply with data deletion and have to tell users that they use this software. 
+* Special: Feel free to ask anything! You might even get a free license!
 
 ### Project values
 
