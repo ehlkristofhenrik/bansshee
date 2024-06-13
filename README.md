@@ -28,12 +28,15 @@ Traditional open-source licenses are not enough.
 
 I added restrictions because I feel that people should not be regulated, companies and governments are.
 
-* Personal & University & Non-Profit & Small-Team: You are free to use and fork our project as long as you keep the license, state changes ( you know, GPL ) and you can not sell it.  ( small_team.members.length <= 20 )
+* Personal & University & Non-Profit & Small-Team: You are free to use and fork our project as long as you keep the license, state changes ( you know, GPL ) and you can not sell it.  ( small_team?.members?.length <= 20 )
 * Commertial & Business: All of the above, and you have to buy a license. You can not force usage and have to comply with data deletion and have to tell users that they use this software. 
 * Special: Feel free to ask anything! You might even get a free license!
 
 ### Project values
 
+* Everyone gets **every feature** at the **same time**
 * Everyone has **equal right to vote** for the direction of the project
 * Every change to the license applies onwards. Older versions keep the same license as they had.
 * You are free to contribute / have your own version.
+* Paid plan owners also get custom plugins and addons that work with Bansshee
+* Paid plan owners also get priority when requesting new features
