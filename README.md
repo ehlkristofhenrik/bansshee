@@ -32,6 +32,10 @@ I added restrictions because I feel that people should not be regulated, compani
 * Commertial & Business: All of the above, and you have to buy a license. You can not force usage and have to comply with data deletion and have to tell users that they use this software. 
 * Special: Feel free to ask anything! You might even get a free license!
 
+### Progress
+
+See: https://tree.taiga.io/project/ehlkristofhenrik-bansshee/kanban
+
 ### Project values
 
 * Everyone gets **every feature** at the **same time** ( core feature set )
