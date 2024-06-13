@@ -34,7 +34,6 @@ I added restrictions because I feel that people should not be regulated, compani
 
 ### Project values
 
-* Everyone gets features **equally**, and at the **same time**
 * Everyone has **equal right to vote** for the direction of the project
 * Every change to the license applies onwards. Older versions keep the same license as they had.
 * You are free to contribute / have your own version.

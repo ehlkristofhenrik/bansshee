@@ -14,8 +14,17 @@ export const DEFAULT_CONFIG: Config = {
 		port: 22
 	},
 	methods: {
-		env: false,
-		exec: false,
-		shell: true
+		env: {
+			enabled: false,
+			action: 'blacklist'
+		},
+		exec: {
+			enabled: false,
+			action: 'blacklist'
+		},
+		shell: {
+			enabled: true,
+			action: 'blacklist'
+		}
 	}
 }

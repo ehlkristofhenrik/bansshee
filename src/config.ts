@@ -1,3 +1,8 @@
+type MethodRule = {
+	enabled: boolean,
+	action: 'pass' | 'blacklist'
+}
+
 export type Config = {
 	mode: 'proxy' | 'server',
 	host: string,
@@ -8,8 +13,8 @@ export type Config = {
 		port: number
 	},
 	methods: {
-		shell: boolean,
-		exec: boolean,
-		env: boolean
+		shell: MethodRule
+		exec: MethodRule
+		env: MethodRule
 	}
 }
