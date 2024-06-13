@@ -1,4 +1,4 @@
-# ✨ Banish ✨ 
+# ✨ Bansshee ✨ 
 > The Open Source SSH Server and Proxy Firewall Powered by AI 🧠
 
 ### 🚧 Under construction!

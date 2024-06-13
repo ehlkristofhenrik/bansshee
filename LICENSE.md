@@ -1,4 +1,4 @@
-# Banish License (BL) v1.0
+# Bansshee License (BL) v1.0
 
 © Copyright Éhl Kristóf Henrik, 2024, june 11.
 
