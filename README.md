@@ -5,7 +5,7 @@
 
 This project is yet incomplete and as of now unusable but I am going to develop it in the open.
 
-### What is this?
+### 💡 What is this?
 
 Banish is my university thesis/hobby project. My goal is to provide an SSH server with some very spicy AI features. I want to bring some new and fresh paradigms to the table. This should mostly be used for remote servers eg.: AWS.
 
@@ -18,11 +18,11 @@ Proposed features:
 - Server and proxy
 - Plugin support
 
-### Why though?
+### 😕 Why though?
 
 AI is coming whether we want/need it or not and I think  that Open Source is the way to go. By Open Source I mean a collaborative, source code openly-accessible project. 
 
-### License TLDR
+### 🧑‍⚖️ License TLDR
 
 Traditional open-source licenses are not enough.
 
@@ -32,15 +32,14 @@ I added restrictions because I feel that people should not be regulated, compani
 * Commertial & Business: All of the above, and you have to buy a license. You can not force usage and have to comply with data deletion and have to tell users that they use this software. 
 * Special: Feel free to ask anything! You might even get a free license!
 
-### Progress
+### ⏳ Progress
 
 See: https://tree.taiga.io/project/ehlkristofhenrik-bansshee/kanban
 
-### Project values
+### 🤝 Project values
 
-* Everyone gets **every feature** at the **same time** ( core feature set )
-* Everyone has **equal right to vote** for the direction of the project
-* Every change to the license applies onwards. Older versions keep the same license as they had.
-* You are free to contribute / have your own version.
-* Paid plan owners also get custom plugins and addons that work with Bansshee
-* Paid plan owners also get priority when requesting new features
+* 🌟 Everyone gets **every feature** at the **same time** ( core feature set )
+* 🌟 Everyone has **equal right to vote** for the direction of the project
+* 🌟 Every change to the license applies onwards. Older versions keep the same license as they had.
+* 💸 Paid plan owners also get custom plugins and addons that work with Bansshee
+* 💸 Paid plan owners also get priority when requesting new features
