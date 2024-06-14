@@ -6,7 +6,7 @@ import { readFileSync } from 'fs'
 
 parseConfig( 'ignore/config.json5' )
 
-console.log( GLOBAL_CONFIG )
+// console.log( GLOBAL_CONFIG )
 
 new ssh.Server({
 	hostKeys: [
@@ -15,4 +15,3 @@ new ssh.Server({
 }, handleProxy )
 .on('error', (err: any)=>{ console.log(err)})
 .listen( GLOBAL_CONFIG.port, GLOBAL_CONFIG.host, listen )
-
