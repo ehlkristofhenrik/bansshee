@@ -1,10 +1,14 @@
 import * as ssh from 'ssh2'
-import { global_config } from '../../../init'
+import { GLOBAL_CONFIG } from 'init'
 
-let ptyInfo: ssh.PseudoTtyOptions
+type State = {
+	ptyInfo: ssh.PseudoTtyInfo
+	clientInfo: ssh.ClientInfo
+}
 
-function onPty( accept: ssh.SessionAccept, reject: ssh.RejectConnection, info: ssh.PseudoTtyInfo ): void {
-	ptyInfo = {
+function onPty( accept: ssh.SessionAccept, reject: ssh.RejectConnection, info: ssh.PseudoTtyInfo, state: State ): void {
+	
+	state.ptyInfo = {
 		cols: info.cols,
 		rows: info.rows,
 		height: info.height,
@@ -15,14 +19,15 @@ function onPty( accept: ssh.SessionAccept, reject: ssh.RejectConnection, info: s
 	accept()
 }
 
-function onShell( accept: ssh.AcceptConnection<ssh.ServerChannel>, reject: ssh.RejectConnection, tunnel: ssh.Client, info: ssh.ClientInfo ): void {
+function onShell( accept: ssh.AcceptConnection<ssh.ServerChannel>, reject: ssh.RejectConnection, tunnel: ssh.Client, state: State ): void {
 
-	if ( global_config.methods.shell.enabled === false ) {
 
-		console.log( `${info.ip} tried to access forbidden method ( shell )`)
+	if ( GLOBAL_CONFIG.methods.shell.enabled === false ) {
 
-		if ( global_config.methods.shell.action === 'blacklist' ) {
-			// BLACKLIST IP
+		console.log( `${state.clientInfo.ip} tried to access forbidden method ( shell )`)
+
+		if ( GLOBAL_CONFIG.methods.shell.action === 'blacklist' ) {
+			// BLACKLIST IP USING KV STORE
 		}
 		
 		reject()
@@ -37,7 +42,7 @@ function onShell( accept: ssh.AcceptConnection<ssh.ServerChannel>, reject: ssh.R
 		serverChannel.close()
 	}
 
-	tunnel.shell( ptyInfo, {}, ( err: Error | undefined, clientChannel: ssh.ClientChannel ) => {
+	tunnel.shell( state.ptyInfo, {}, ( err: Error | undefined, clientChannel: ssh.ClientChannel ) => {
 		
 		tunnel.on( 'ready', () => {
 
@@ -61,8 +66,9 @@ function onShell( accept: ssh.AcceptConnection<ssh.ServerChannel>, reject: ssh.R
 
 }
 
-function onWindowChanged( accept: ssh.SessionAccept, reject: ssh.RejectConnection, info: ssh.WindowChangeInfo ): void {
-	ptyInfo = {
+function onWindowChanged( accept: ssh.SessionAccept, reject: ssh.RejectConnection, info: ssh.WindowChangeInfo, state: State ): void {
+	state.ptyInfo = {
+		modes: state.ptyInfo.modes,
 		cols: info.cols,
 		rows: info.rows,
 		height: info.height,
@@ -72,11 +78,24 @@ function onWindowChanged( accept: ssh.SessionAccept, reject: ssh.RejectConnectio
 
 // Handler
 export function sessionHandler( accept: ssh.AcceptConnection<ssh.Session>, reject: ssh.RejectConnection, tunnel: ssh.Client, info: ssh.ClientInfo ): void {
-	
+
+	let state: State = {
+		clientInfo: info,
+		ptyInfo: {
+			rows: 0,
+			cols: 0,
+			width: 0,
+			height: 0,
+			modes: {}
+		}
+	}
+
 	let session = accept()
 
 	session
-		.on( 'pty', onPty )
-		.on( 'shell', ( accept: ssh.AcceptConnection<ssh.ServerChannel>, reject: ssh.RejectConnection ) => onShell( accept, reject, tunnel, info ) )
-		.on( 'window-change', onWindowChanged )
+		.on( 'pty', ( accept: ssh.SessionAccept, reject: ssh.RejectConnection, info: ssh.PseudoTtyInfo ) => onPty( accept, reject, info, state ) )
+		
+		.on( 'shell', ( accept: ssh.AcceptConnection<ssh.ServerChannel>, reject: ssh.RejectConnection ) => onShell( accept, reject, tunnel, state ) )
+		
+		.on( 'window-change', ( accept: ssh.SessionAccept, reject: ssh.RejectConnection, info: ssh.WindowChangeInfo ) => onWindowChanged( accept, reject, info, state ) )
 }

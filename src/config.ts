@@ -1,20 +1,25 @@
-type MethodRule = {
-	enabled: boolean,
-	action: 'pass' | 'blacklist'
-}
+import { z } from 'zod'
 
-export type Config = {
-	mode: 'proxy' | 'server',
-	host: string,
-	port: number,
-	identity?: string,
-	proxy?: {
-		host: string,
-		port: number
-	},
-	methods: {
-		shell: MethodRule
-		exec: MethodRule
-		env: MethodRule
-	}
-}
+const MethodRule = z.object({
+	enabled: z.boolean(),
+	action: z.enum([ 'pass', 'blacklist' ])
+})
+
+export const ConfigValidator = z.object({
+	pluginPath: z.string().min( 1 ),
+	mode: z.enum([ 'proxy', 'server' ]),
+	host: z.string().min( 1 ),
+	port: z.number().positive(),
+	identity: z.string().optional(),
+	proxy: z.object({
+		host: z.string().min(1),
+		port: z.number().positive()
+	}).optional(),
+	methods: z.object({
+		shell: MethodRule,
+		exec: MethodRule,
+		env: MethodRule,
+	})
+})
+
+export type Config = z.infer<typeof ConfigValidator>

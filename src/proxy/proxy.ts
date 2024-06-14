@@ -1,8 +1,8 @@
 import * as ssh from 'ssh2'
-import { global_config } from '../init.ts'
+import { GLOBAL_CONFIG } from 'init'
 
-import { authHandler } from './handler/auth/auth.ts'
-import { sessionHandler } from './handler/session/session.ts'
+import { authHandler } from 'proxy/handler/auth/auth'
+import { sessionHandler } from 'proxy/handler/session/session'
 
 
 export function handleProxy( client: ssh.Connection, info: ssh.ClientInfo ): void {

@@ -1,52 +1,59 @@
 import JSON5 from 'json5'
 import { existsSync, readFileSync } from 'fs'
-import { DEFAULT_CONFIG, VERSION } from './const.ts'
-import { type Config } from './config.ts';
+import { DEFAULT_CONFIG, VERSION } from 'const'
+import { type Config, ConfigValidator } from 'config'
 
 // Global configuration
-export let global_config: Config = DEFAULT_CONFIG
+export let GLOBAL_CONFIG: Config = DEFAULT_CONFIG
 
 // Parse config and store it in global_config
 export function parseConfig( path: string ): void {
 
-	let config = structuredClone( DEFAULT_CONFIG )
-	
-	if ( existsSync( path ) ) {
-		
-		const content = readFileSync( path ).toString()
-		
-		try {
+  let config = structuredClone( DEFAULT_CONFIG )
+  
+  if ( existsSync( path ) ) {
+    
+    try {
 
-			const conf = JSON5.parse( content )
-			
-			config = Object.assign( config, conf )
+      const content = readFileSync( path ).toString()
 
-		} catch {
+      const conf = JSON5.parse( content )
+      
+      const parseResult = ConfigValidator.safeParse( conf ) 
 
-			throw new Error( `Could not parse JSON5 config file: ${path}`)
-		
-		}
+      if ( !parseResult.success )
+        throw parseResult.error
 
-	}
+      config = parseResult.data
 
-	global_config = config
+    } catch ( err: unknown ) {
+
+      console.log( `Could not parse JSON5 config file ${path} because: ${err}`)
+    
+    }
+
+  } else {
+    console.log( `File ${path} not found` )
+  }
+
+  GLOBAL_CONFIG = config
 }
 
 // Runs when the server starts listening
 export function listen(): void {
   console.log(String.raw`
-      ____  ___    _   ___________ __  __
-     / __ )/   |  / | / /  _/ ___// / / /
-    / __  / /| | /  |/ // / \__ \/ /_/ /
-   / /_/ / ___ |/ /|  // / ___/ / __  /
-  /_____/_/  |_/_/ |_/___//____/_/ /_/
+    ____  ___    _   _______ __  ______________
+   / __ )/   |  / | / / ___// / / / ____/ ____/
+  / __  / /| | /  |/ /\__ \/ /_/ / __/ / __/   
+ / /_/ / ___ |/ /|  /___/ / __  / /___/ /___   
+/_____/_/  |_/_/ |_//____/_/ /_/_____/_____/
   `,`
   > Futureproof now!
 
   Made by zen-bons.ai
-	
-	v${VERSION}
+  
+  v${VERSION}
 
-  Listening on localhost:1234
+  Listening on ${GLOBAL_CONFIG.host}:${GLOBAL_CONFIG.port} as ${GLOBAL_CONFIG.mode}
 `)
 }

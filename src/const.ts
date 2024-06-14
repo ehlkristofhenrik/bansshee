@@ -1,18 +1,17 @@
-import { type Config } from './config.ts'
+import { type Config } from 'config'
 
 export const CONFIG_PATH = 'config.json5'
 
-export const VERSION = '0.0.1'
+export const PLUGIN_PATH = 'src/plugin/'
+
+export const VERSION = '0.0.1/2 beta'
 
 export const DEFAULT_CONFIG: Config = {
+	pluginPath: '/home/user/Work/bansshee/src/plugin',
 	host: '127.0.0.1',
 	port: 2222,
-	mode: 'proxy',
-	identity: 'OPENSSH-1.0.0',
-	proxy: {
-		host: '127.0.0.1',
-		port: 22
-	},
+	mode: 'server',
+	identity: '',
 	methods: {
 		env: {
 			enabled: false,
