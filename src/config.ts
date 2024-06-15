@@ -20,6 +20,13 @@ export const ConfigValidator = z.object({
 		exec: MethodRule,
 		env: MethodRule,
 	})
-})
+}).refine(
+  value => {
+    if ( value.mode === 'proxy' && value.proxy === undefined ) 
+      return false
+    return true
+  }, 
+  'Proxy values must be set when running in proxy mode' 
+)
 
 export type Config = z.infer<typeof ConfigValidator>

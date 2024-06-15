@@ -41,16 +41,28 @@ function onShell( accept: ssh.AcceptConnection<ssh.ServerChannel>, reject: ssh.R
 		tunnel.end()
 		serverChannel.close()
 	}
-
-	tunnel.shell( state.ptyInfo, {}, ( err: Error | undefined, clientChannel: ssh.ClientChannel ) => {
+  // already
+	tunnel.shell( state.ptyInfo, {}, ( err: Error | undefined, tunnelChannel: ssh.ClientChannel ) => {
 		
-		tunnel.on( 'ready', () => {
+		serverChannel.stdin.on( 'readable', () => {
+      let message = serverChannel.stdin.read()
+      if ( message !== null && message !== undefined ) {
+        tunnelChannel.stdin.write( message )
+      }
+    })
 
-			if ( err !== undefined && err !== null ) {
-				close()
-			}
+    tunnelChannel.stderr.on( 'data', ( chunk: any ) => {
+      if ( chunk !== undefined && chunk !== null )
+        serverChannel.stderr.write( chunk )
+    })
 
-		})
+    tunnelChannel.stdout.on( 'data', ( chunk: any ) => {
+      if ( chunk !== undefined && chunk !== null )
+        serverChannel.stdout.write( chunk )
+    })
+
+    tunnelChannel.on( 'exit', close )
+    
 
 	})
 		.on( 'timeout', close )
@@ -79,7 +91,7 @@ function onWindowChanged( accept: ssh.SessionAccept, reject: ssh.RejectConnectio
 // Handler
 export function sessionHandler( accept: ssh.AcceptConnection<ssh.Session>, reject: ssh.RejectConnection, tunnel: ssh.Client, info: ssh.ClientInfo ): void {
 
-	let state: State = {
+  let state: State = {
 		clientInfo: info,
 		ptyInfo: {
 			rows: 0,
